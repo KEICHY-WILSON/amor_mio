@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Te Amo ❤️</title>
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  .message {
+    position: absolute;
+    font-size: clamp(16px, 2.5vw, 24px);
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 0 10px #ff4b6e;
+    user-select: none;
+    pointer-events: none;
+    animation: floatUp 2s ease forwards;
+    white-space: nowrap;
+  }
+
+  @keyframes floatUp {
+    0% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-80px) scale(1.5);
+    }
+  }
+
+  header {
+    text-align: center;
+    padding: clamp(15px, 5vw, 30px);
+    color: #fff;
+    font-size: clamp(20px, 6vw, 36px);
+    text-shadow: 0 0 10px #ff4b6e;
+  }
+
+  footer {
+    position: fixed;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    font-size: clamp(14px, 3vw, 18px);
+    text-shadow: 0 0 6px #ff4b6e;
+    user-select: none;
+  }
+
+  #musicToggle {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    background: #ff4b6e;
+    border: none;
+    color: white;
+    font-weight: 700;
+    padding: 10px 15px;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 0 10px #ff4b6e;
+    user-select: none;
+    transition: background 0.3s ease;
+    z-index: 10;
+  }
+  #musicToggle:hover {
+    background: #ff2a50;
+  }
+
+  #player {
+    display: none;
+    position: fixed;
+    top: 60px;
+    right: 15px;
+    z-index: 10;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #ff4b6e;
+  }
+</style>
+</head>
+<body>
+
+<header>TU NOVIO KEICHY QUIERE DECIRTE ALGO "DALE CLICK AMOR"</header>
+
+<footer>❤ Para mi novia hermosa de KEICHY❤</footer>
+
+<button id="musicToggle">🎵 Reproducir música</button>
+
+<audio id="player" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_3f38f1d138.mp3?filename=lovely-piano-11204.mp3" type="audio/mpeg" />
+  Tu navegador no soporta audio.
+</audio>
+
+<script>
+  const mensajes = [
+    "Keichy Te ama ❤️",
+    "Eres mi todo 💖",
+    "Contigo soy feliz 😊",
+    "Mi corazón es tuyo 💘",
+    "Siempre juntos 💑",
+    "Eres mi inspiración 🌟",
+    "No dejo de pensar en ti 😍",
+    "Eres mi alegría diaria 🌈",
+    "Gracias por existir 💕",
+    "Te amo más que ayer 💞"
+  ];
+
+  document.body.addEventListener("click", (e) => {
+    // Evita que el click en el botón o en el reproductor cree mensaje
+    if(e.target.closest("#musicToggle") || e.target.closest("#player")) return;
+
+    const mensaje = mensajes[Math.floor(Math.random() * mensajes.length)];
+
+    const span = document.createElement("span");
+    span.className = "message";
+    span.textContent = mensaje;
+
+    const maxX = window.innerWidth - 150;
+    const x = Math.min(e.clientX, maxX);
+
+    const maxY = window.innerHeight - 50;
+    const y = Math.min(e.clientY, maxY);
+
+    span.style.left = x + "px";
+    span.style.top = y + "px";
+
+    document.body.appendChild(span);
+
+    setTimeout(() => {
+      span.remove();
+    }, 2000);
+  });
+
+  const btn = document.getElementById("musicToggle");
+  const player = document.getElementById("player");
+
+  btn.addEventListener("click", () => {
+    if(player.paused) {
+      player.play().catch(() => {
+        alert("Por favor, permite que el audio se reproduzca manualmente en tu navegador.");
+      });
+      btn.textContent = "🔇 Pausar música";
+      player.style.display = "block";
+    } else {
+      player.pause();
+      btn.textContent = "🎵 Reproducir música";
+      player.style.display = "none";
+    }
+  });
+</script>
+
+</body>
+</html>
